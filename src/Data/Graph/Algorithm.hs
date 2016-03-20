@@ -24,13 +24,23 @@ import Data.Monoid
 
 import Data.Graph.Class
 
--- | Graph search visitor
+-- | 'GraphSearch': Graph search visitor
 data GraphSearch g m = GraphSearch
-  { enterVertex :: Vertex g -> g m -- called the first time a vertex is discovered
-  , enterEdge   :: Edge g   -> g m -- called the first time an edge is discovered, before enterVertex
-  , grayTarget  :: Edge g   -> g m -- called when we encounter a back edge to a vertex we're still processing
-  , exitVertex  :: Vertex g -> g m -- called once we have processed all descendants of a vertex
-  , blackTarget :: Edge g   -> g m -- called when we encounter a cross edge to a vertex we've already finished
+  {
+  -- | 'enterVertex': Called the first time 'Vertex' is discovered.
+    enterVertex :: Vertex g -> g m
+  -- | 'enterEdge': Called the first time an 'Edge' is discovered,
+  --   before 'enterVertex'.
+  , enterEdge   :: Edge g   -> g m
+  -- | 'grayTarget': Called when we encounter a back 'Edge' to a 'Vertex'
+  --   we are still processing.
+  , grayTarget  :: Edge g   -> g m
+  -- | 'exitVertex': Called once we have processed all descendants of a
+  --   'Vertex'.
+  , exitVertex  :: Vertex g -> g m
+  -- | 'blackTarget': Called when we encounter a cross 'Edge' to a 'Vertex'
+  --   we have already finished.
+  , blackTarget :: Edge g   -> g m
   }
 
 instance Graph g => Functor (GraphSearch g) where

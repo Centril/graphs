@@ -26,8 +26,11 @@ import Data.Graph.PropertyMap
 import Data.Graph.Class
 import Data.Graph.Class.AdjacencyMatrix
 
+-- | 'AdjacencyMatrix': represents a function which takes an adjacency matrix as
+--   an argument, parameterized on the 'Vertex' index and return value types.
 newtype AdjacencyMatrix arr i a = AdjacencyMatrix { runAdjacencyMatrix :: arr (i,i) Bool -> a }
 
+-- | 'ask': creates an 'AdjacencyMatrix' containing the 'id' function.
 ask :: AdjacencyMatrix arr i (arr (i, i) Bool)
 ask = AdjacencyMatrix id
 

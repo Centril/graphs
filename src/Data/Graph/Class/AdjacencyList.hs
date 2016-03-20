@@ -35,22 +35,24 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
+-- | 'defaultOutEdges': TODO
 defaultOutEdges :: AdjacencyListGraph g => Vertex g -> g [(Vertex g, Vertex g)]
 defaultOutEdges v = liftM (map ((,) v)) (adjacentVertices v)
 
 -- | Minimal definition: 'source', 'target', and either 'adjacentVertices' with @'outEdges' = 'defaultOutEdges'@ or 'outEdges'
 class Graph g => AdjacencyListGraph g where
-  -- /O(1)/
+  -- | 'source': Complexity /O(1)/
   source :: Edge g -> g (Vertex g)
-  -- /O(1)/
+  -- | 'target': Complexity: /O(1)/
   target :: Edge g -> g (Vertex g)
-  -- /O(e)/ in the number of out edges
+  -- | 'outEdges': Complexity /O(e)/ in the number of out edges
   outEdges :: Vertex g -> g [Edge g]
 
-  -- /O(e)/
+  -- | 'outDegree': /O(e)/
   outDegree :: Vertex g -> g Int
   outDegree v = liftM length (outEdges v)
 
+  -- | 'adjacentVertices': TODO
   adjacentVertices :: Vertex g -> g [Vertex g]
   adjacentVertices = outEdges >=> mapM target
 

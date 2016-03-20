@@ -33,8 +33,9 @@ import Data.Monoid
 import Data.Graph.Class
 import Data.Functor.Identity
 
+-- | 'VertexEnumerableGraph': TODO
 class Graph g => VertexEnumerableGraph g where
-  -- | /O(v)/
+  -- | 'vertices': Complexity /O(v)/
   vertices :: g [Vertex g]
 
 instance VertexEnumerableGraph g => VertexEnumerableGraph (Strict.StateT s g) where
