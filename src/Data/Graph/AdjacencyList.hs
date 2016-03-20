@@ -26,8 +26,11 @@ import Data.Graph.PropertyMap
 import Data.Graph.Class
 import Data.Graph.Class.AdjacencyList
 
+-- | 'AdjacencyList': represents a function which takes an adjacency list as
+--   an argument, parameterized on the 'Vertex' index and return value types.
 newtype AdjacencyList i a = AdjacencyList { runAdjacencyList :: Array i [i] -> a }
 
+-- | 'ask': creates an 'AdjacencyList' containing the 'id' function.
 ask :: AdjacencyList i (Array i [i])
 ask = AdjacencyList id
 

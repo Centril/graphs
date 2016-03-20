@@ -42,6 +42,8 @@ putS k v = do
   put m'
 
 -- TODO: CPS transform?
+-- | 'dfs': Given a 'GraphSearch' visitor and a starting 'Vertex', returns an
+--   'AdjacencyListGraph' constructed to perform a depth-first search.
 dfs :: (AdjacencyListGraph g, Monoid m) => GraphSearch g m -> Vertex g -> g m
 dfs vis v0 = do
   m <- vertexMap White

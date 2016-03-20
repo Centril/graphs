@@ -33,8 +33,9 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
+-- | 'EdgeEnumerableGraph': TODO
 class Graph g => EdgeEnumerableGraph g where
-  -- | /O(e)/
+  -- | 'edges': Complexity /O(e)/
   edges :: g [Edge g]
 
 instance EdgeEnumerableGraph g => EdgeEnumerableGraph (Strict.StateT s g) where

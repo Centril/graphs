@@ -27,6 +27,7 @@ import Data.Graph.Class.EdgeEnumerable
 import Data.Graph.Class.VertexEnumerable
 import Data.Graph.Class.Bidirectional
 
+-- | 'Dual': TODO
 newtype Dual g a = Dual { runDual :: g a }
 
 instance MonadTrans Dual where

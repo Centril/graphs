@@ -59,6 +59,8 @@ dequeue ke ks = do
     EmptyL -> ke
     (a :< q') -> put (q', m) >> ks a
 
+-- | 'bfs': Given a 'GraphSearch' visitor and a starting 'Vertex', returns an
+--   'AdjacencyListGraph' constructed to perform a breadth-first search.
 bfs :: (AdjacencyListGraph g, Monoid m) => GraphSearch g m -> Vertex g -> g m
 bfs vis v0 = do
   m <- vertexMap White

@@ -30,12 +30,13 @@ data PropertyMap m k v = PropertyMap
   , putP :: k -> v -> m (PropertyMap m k v)
   }
 
+-- | 'modifyP': TODO
 modifyP :: Monad m => PropertyMap m k v -> k -> (v -> v) -> m (PropertyMap m k v)
 modifyP m k f = do
   a <- getP m k
   putP m k (f a)
 
--- A pure IntMap-backed vertex map
+-- | 'intPropertyMap': A pure IntMap-backed vertex map
 intPropertyMap :: Monad m => v -> PropertyMap m Int v
 intPropertyMap v0 = go v0 IntMap.empty where
   go v m = PropertyMap
@@ -43,7 +44,7 @@ intPropertyMap v0 = go v0 IntMap.empty where
     , putP = \k v' -> return $ go v (IntMap.insert k v' m)
     }
 
--- A pure Map-backed vertex map
+-- | 'propertyMap': A pure Map-backed vertex map
 propertyMap :: (Monad m, Ord k) => v -> PropertyMap m k v
 propertyMap v0 = go v0 Map.empty where
   go v m = PropertyMap
@@ -51,5 +52,6 @@ propertyMap v0 = go v0 Map.empty where
     , putP = \k v' -> return $ go v (Map.insert k v' m)
     }
 
+-- | 'liftPropertyMap': TODO
 liftPropertyMap :: (MonadTrans t, Monad m, Monad (t m)) => PropertyMap m k v -> PropertyMap (t m) k v
 liftPropertyMap (PropertyMap g p) = PropertyMap (lift . g) (\k v -> liftPropertyMap `liftM` lift (p k v))
