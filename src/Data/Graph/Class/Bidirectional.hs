@@ -27,7 +27,7 @@ import qualified Control.Monad.Trans.RWS.Lazy as Lazy
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Error
+import Control.Monad.Trans.Except
 import Data.Functor.Identity
 #if __GLASGOW_HASKELL__ < 710
 import Data.Monoid
@@ -101,7 +101,7 @@ instance BidirectionalGraph g => BidirectionalGraph (MaybeT g) where
   incidentEdges = lift . incidentEdges
   degree = lift . degree
 
-instance (BidirectionalGraph g, Error e) => BidirectionalGraph (ErrorT e g) where
+instance BidirectionalGraph g => BidirectionalGraph (ExceptT e g) where
   inEdges  = lift . inEdges
   inDegree = lift . inDegree
   incidentEdges = lift . incidentEdges

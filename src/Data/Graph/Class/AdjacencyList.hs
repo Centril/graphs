@@ -27,7 +27,7 @@ import qualified Control.Monad.Trans.RWS.Strict as Strict
 import qualified Control.Monad.Trans.RWS.Lazy as Lazy
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Error
+import Control.Monad.Trans.Except
 import Control.Monad.Trans.Reader
 import Data.Functor.Identity
 #if __GLASGOW_HASKELL__ < 710
@@ -103,7 +103,7 @@ instance AdjacencyListGraph g => AdjacencyListGraph (ReaderT e g) where
   outEdges = lift . outEdges
   outDegree = lift . outDegree
 
-instance (AdjacencyListGraph g, Error e) => AdjacencyListGraph (ErrorT e g) where
+instance (AdjacencyListGraph g) => AdjacencyListGraph (ExceptT e g) where
   adjacentVertices = lift . adjacentVertices
   source = lift . source
   target = lift . target

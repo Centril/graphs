@@ -28,7 +28,7 @@ import qualified Control.Monad.Trans.RWS.Strict as Strict
 import qualified Control.Monad.Trans.RWS.Lazy as Lazy
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Error
+import Control.Monad.Trans.Except
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Class
 import Data.Functor.Identity
@@ -99,9 +99,9 @@ instance Graph g => Graph (MaybeT g) where
   vertexMap = liftVertexMap
   edgeMap = liftEdgeMap
 
-instance (Graph g, Error e) => Graph (ErrorT e g) where
-  type Vertex (ErrorT e g) = Vertex g
-  type Edge (ErrorT e g) = Edge g
+instance Graph g => Graph (ExceptT e g) where
+  type Vertex (ExceptT e g) = Vertex g
+  type Edge (ExceptT e g) = Edge g
   vertexMap = liftVertexMap
   edgeMap = liftEdgeMap
 

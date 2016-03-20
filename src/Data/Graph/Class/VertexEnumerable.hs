@@ -24,7 +24,7 @@ import qualified Control.Monad.Trans.RWS.Strict as Strict
 import qualified Control.Monad.Trans.RWS.Lazy as Lazy
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Error
+import Control.Monad.Trans.Except
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Reader
 #if __GLASGOW_HASKELL__ < 710
@@ -61,7 +61,7 @@ instance VertexEnumerableGraph g => VertexEnumerableGraph (MaybeT g) where
 instance VertexEnumerableGraph g => VertexEnumerableGraph (IdentityT g) where
   vertices = lift vertices
 
-instance (VertexEnumerableGraph g, Error e) => VertexEnumerableGraph (ErrorT e g) where
+instance VertexEnumerableGraph g => VertexEnumerableGraph (ExceptT e g) where
   vertices = lift vertices
 
 instance VertexEnumerableGraph g => VertexEnumerableGraph (ReaderT m g) where

@@ -25,7 +25,7 @@ import qualified Control.Monad.Trans.RWS.Lazy as Lazy
 import Control.Monad.Trans.Reader
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Error
+import Control.Monad.Trans.Except
 import Control.Monad.Trans.Class
 import Data.Functor.Identity
 #if __GLASGOW_HASKELL__ < 710
@@ -61,7 +61,7 @@ instance EdgeEnumerableGraph g => EdgeEnumerableGraph (MaybeT g) where
 instance EdgeEnumerableGraph g => EdgeEnumerableGraph (IdentityT g) where
   edges = lift edges
 
-instance (EdgeEnumerableGraph g, Error e) => EdgeEnumerableGraph (ErrorT e g) where
+instance EdgeEnumerableGraph g => EdgeEnumerableGraph (ExceptT e g) where
   edges = lift edges
 
 instance EdgeEnumerableGraph g => EdgeEnumerableGraph (ReaderT e g) where
