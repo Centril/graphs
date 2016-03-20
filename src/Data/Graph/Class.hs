@@ -45,20 +45,17 @@ type VertexMap g = PropertyMap g (Vertex g)
 --   computations.
 type EdgeMap g = PropertyMap g (Edge g)
 
--- | 'Graph': TODO
 class (Monad g, Eq (Vertex g), Eq (Edge g)) => Graph g where
   type Vertex g :: *
   type Edge g :: *
   vertexMap :: a -> g (VertexMap g a)
   edgeMap   :: a -> g (EdgeMap g a)
 
--- | 'liftVertexMap': TODO
 liftVertexMap :: (MonadTrans t, Graph (t g), Graph g, Vertex (t g) ~ Vertex g)
               => a -> t g (VertexMap (t g) a)
 liftVertexMap = lift . liftM liftPropertyMap . vertexMap
 {-# INLINE liftVertexMap #-}
 
--- | 'liftEdgeMap': TODO
 liftEdgeMap :: (MonadTrans t, Graph (t g), Graph g, Edge (t g) ~ Edge g)
             => a -> t g (EdgeMap (t g) a)
 liftEdgeMap = lift . liftM liftPropertyMap . edgeMap

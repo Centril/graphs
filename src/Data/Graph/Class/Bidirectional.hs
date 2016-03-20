@@ -34,7 +34,6 @@ import Data.Monoid
 #endif
 import Data.Graph.Class.AdjacencyList
 
--- | 'BidirectionalGraph': TODO
 class AdjacencyListGraph g => BidirectionalGraph g where
   -- | 'inEdges': Complexity /O(e)/
   inEdges :: Vertex g -> g [Edge g]
@@ -42,11 +41,11 @@ class AdjacencyListGraph g => BidirectionalGraph g where
   inDegree :: Vertex g -> g Int
   inDegree v = length `liftM` inEdges v
 
-  -- | 'incidentEdges': TODO
+  -- | 'incidentEdges': Gives the outgoing and ingoing edges.
   incidentEdges :: Vertex g -> g [Edge g]
   incidentEdges v = liftM2 (++) (inEdges v) (outEdges v)
 
-  -- | 'degree': TODO
+  -- | 'degree': Gives the number of outgoing and ingoing edges.
   degree :: Vertex g -> g Int
   degree v = liftM2 (+) (inDegree v) (outDegree v)
 

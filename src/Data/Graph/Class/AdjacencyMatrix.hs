@@ -33,9 +33,9 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
--- | 'AdjacencyMatrixGraph': TODO
 class Graph g => AdjacencyMatrixGraph g where
-  -- | 'edge': TODO
+  -- | 'edge': Gives the 'Edge' connected two given 'Vertex's if
+  --   any such exists.
   edge :: Vertex g -> Vertex g -> g (Maybe (Edge g))
 
 instance AdjacencyMatrixGraph g => AdjacencyMatrixGraph (Strict.StateT s g) where

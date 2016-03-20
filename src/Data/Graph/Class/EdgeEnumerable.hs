@@ -33,7 +33,6 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
--- | 'EdgeEnumerableGraph': TODO
 class Graph g => EdgeEnumerableGraph g where
   -- | 'edges': Complexity /O(e)/
   edges :: g [Edge g]

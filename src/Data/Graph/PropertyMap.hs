@@ -30,7 +30,8 @@ data PropertyMap m k v = PropertyMap
   , putP :: k -> v -> m (PropertyMap m k v)
   }
 
--- | 'modifyP': TODO
+-- | 'modifyP': Changes the value associated with a key in a
+--   'PropertyMap' given a transition function.
 modifyP :: Monad m => PropertyMap m k v -> k -> (v -> v) -> m (PropertyMap m k v)
 modifyP m k f = do
   a <- getP m k
@@ -52,6 +53,5 @@ propertyMap v0 = go v0 Map.empty where
     , putP = \k v' -> return $ go v (Map.insert k v' m)
     }
 
--- | 'liftPropertyMap': TODO
 liftPropertyMap :: (MonadTrans t, Monad m, Monad (t m)) => PropertyMap m k v -> PropertyMap (t m) k v
 liftPropertyMap (PropertyMap g p) = PropertyMap (lift . g) (\k v -> liftPropertyMap `liftM` lift (p k v))
