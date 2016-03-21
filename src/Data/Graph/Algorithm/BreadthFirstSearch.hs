@@ -23,7 +23,7 @@ import Data.Foldable
 #if __GLASGOW_HASKELL__ < 710
 import Data.Monoid
 #endif
-import Data.Sequence
+import Data.Sequence hiding (reverse)
 
 import Data.Graph.Algorithm
 import Data.Graph.Class
@@ -68,15 +68,16 @@ bfs vis v0 = do
   where
   pump lhs = dequeue (return lhs) $ \ v -> do
     adjs <- lift $ outEdges v
+    let revAdjs = reverse adjs
     children <- foldrM
       (\e m -> do
         v' <- target e
         color <- getS v'
-        liftM (`mappend` m) $ case color of
+        liftM (m `mappend`) $ case color of
           White -> (liftM2 mappend) (lift $ enterEdge vis e) (enqueue vis v')
           Grey -> lift $ grayTarget vis e
           Black -> lift $ blackTarget vis e
-      ) mempty adjs
+      ) mempty revAdjs
     putS v Black
     rhs <- lift $ exitVertex vis v
     pump $ lhs `mappend` children `mappend` rhs

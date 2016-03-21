@@ -52,6 +52,7 @@ dfs vis v0 = do
     putS v Grey
     lhs <- lift $ enterVertex vis v
     adjs <- lift $ outEdges v
+    let revAdjs = reverse adjs
     result <- foldrM
       (\e m -> do
         v' <- target e
@@ -62,7 +63,7 @@ dfs vis v0 = do
           Black -> lift $ blackTarget vis e
       )
       mempty
-      adjs
+      revAdjs
     putS v Black
     rhs <- lift $ exitVertex vis v
     return $ lhs `mappend` result `mappend` rhs
