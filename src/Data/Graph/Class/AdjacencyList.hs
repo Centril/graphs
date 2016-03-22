@@ -35,6 +35,7 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
+-- | 'defaultOutEdges': Given a 'Vertex', returns all outgoing 'Edge's.
 defaultOutEdges :: AdjacencyListGraph g => Vertex g -> g [(Vertex g, Vertex g)]
 defaultOutEdges v = liftM (map ((,) v)) (adjacentVertices v)
 
@@ -51,6 +52,8 @@ class Graph g => AdjacencyListGraph g where
   outDegree :: Vertex g -> g Int
   outDegree v = liftM length (outEdges v)
 
+  -- | 'adjacentVertices': Given a 'Vertex', returns all 'Vertex's connected
+  --   by an outgoing 'Edge'.
   adjacentVertices :: Vertex g -> g [Vertex g]
   adjacentVertices = outEdges >=> mapM target
 

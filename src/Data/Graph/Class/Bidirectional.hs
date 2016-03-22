@@ -34,18 +34,20 @@ import Data.Monoid
 #endif
 import Data.Graph.Class.AdjacencyList
 
+-- | 'BidirectionalGraph': A graph with functions for getting 'Edge' information
+--   without caring about the direction.
 class AdjacencyListGraph g => BidirectionalGraph g where
-  -- | 'inEdges': Complexity /O(e)/
+  -- | 'inEdges': /O(e)/. Gives ingoing edges.
   inEdges :: Vertex g -> g [Edge g]
-  -- | 'inDegree': Complexity /O(e)/
+  -- | 'inDegree': /O(e)/. Gives number of ingoing edges.
   inDegree :: Vertex g -> g Int
   inDegree v = length `liftM` inEdges v
 
-  -- | 'incidentEdges': Gives the outgoing and ingoing edges.
+  -- | 'incidentEdges': Gives all connected 'Edge's.
   incidentEdges :: Vertex g -> g [Edge g]
   incidentEdges v = liftM2 (++) (inEdges v) (outEdges v)
 
-  -- | 'degree': Gives the number of outgoing and ingoing edges.
+  -- | 'degree': Gives the total number of 'Edge's.
   degree :: Vertex g -> g Int
   degree v = liftM2 (+) (inDegree v) (outDegree v)
 

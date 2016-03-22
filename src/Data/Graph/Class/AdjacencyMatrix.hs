@@ -33,8 +33,10 @@ import Data.Monoid
 #endif
 import Data.Graph.Class
 
+-- | 'AdjacencyMatrixGraph': A type class providing a function to check whether
+--   two 'Vertex's are connected by an 'Edge' or not.
 class Graph g => AdjacencyMatrixGraph g where
-  -- | 'edge': Gives the 'Edge' connected two given 'Vertex's if
+  -- | 'edge': Gives the 'Edge' connected to the two given 'Vertex's if
   --   any such exists.
   edge :: Vertex g -> Vertex g -> g (Maybe (Edge g))
 
